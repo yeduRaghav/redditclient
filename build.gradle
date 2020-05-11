@@ -24,6 +24,34 @@ allprojects {
     }
 }
 
+ext {
+    appCompactVersion = "1.1.0"
+    ktxVersion = "1.2.0"
+
+    lifecycleVersion = "1.1.1"
+
+    constraintlayoutVersion = "1.1.3"
+    recyclerViewVersion = "1.1.0"
+    materialVersion = "1.1.0"
+    cardVersion = "1.0.0"
+
+    picassoVersion ="2.71828"
+    lottieVersion="3.4.0"
+    circleImageViewVersion = "3.1.0"
+
+    retrofitVersion = "2.3.0"
+    okhttpLoggingInterceptorVersion = "4.6.0"
+
+    rxAndroidVersion = "2.0.1"
+    daggerVersion = "2.20"
+
+    jUnitVersion = "4.12"
+    jUnitExtVersion = "1.1.1"
+    expressoVersion = "3.2.0"
+
+}
+
+
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
