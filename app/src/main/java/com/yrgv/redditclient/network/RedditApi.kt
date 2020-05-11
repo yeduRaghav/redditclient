@@ -8,6 +8,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 /**
  *  Retrofit Api definition.
@@ -17,7 +18,9 @@ interface RedditApi {
 
     companion object {
         private const val BASE_URL = "https://www.reddit.com/r/"
-        private const val SUB_REDDIT_KOTLIN = "Kotlin"
+        private const val RESPONSE_TYPE_JSON = ".json"
+        private const val SUB_REDDIT_KOTLIN = "Amd" //todo: change later to 'Kotlin'
+
 
 
         /**
@@ -45,7 +48,14 @@ interface RedditApi {
     }
 
 
-    @GET(SUB_REDDIT_KOTLIN)
-    fun getKotlinPosts(): Single<PostsResponse>
+    /**
+     * Returns a list of posts for a subReddit
+     * @param subReddit The subReddit to returns the post from.
+     * By default returns from Kotlin subReddit
+     * */
+    @GET("{subReddit}$RESPONSE_TYPE_JSON")
+    fun getPosts(
+        @Path("subReddit") subReddit: String = SUB_REDDIT_KOTLIN
+    ): Single<PostsResponse>
 
 }
