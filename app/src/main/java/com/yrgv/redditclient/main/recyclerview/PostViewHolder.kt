@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textview.MaterialTextView
 import com.squareup.picasso.Picasso
@@ -12,7 +11,6 @@ import com.yrgv.redditclient.Post
 import com.yrgv.redditclient.R
 import com.yrgv.redditclient.utils.SimpleCallback
 import com.yrgv.redditclient.utils.extensions.hide
-import com.yrgv.redditclient.utils.extensions.replaceBrace
 import com.yrgv.redditclient.utils.extensions.show
 
 /**
@@ -41,11 +39,8 @@ class PostViewHolder private constructor(itemView: View) : RecyclerView.ViewHold
 
     fun bind(post: Post, onClicked: SimpleCallback) {
         itemView.setOnClickListener { onClicked() }
-
-        authorView.text =
-            itemView.context.getString(R.string.post_card_username).replaceBrace(post.author)
-
-        titleView.setText(post.title, TextView.BufferType.SPANNABLE) //todo: review this
+        authorView.text = post.author
+        titleView.text = post.title
 
         //todo: implement dynamic image sizing, maintaining Aspect ratio
         post.thumbnailUrl?.let { url ->

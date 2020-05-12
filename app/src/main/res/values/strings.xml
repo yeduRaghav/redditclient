@@ -3,6 +3,6 @@
 
     <string name="error_view_message">Oops! Something went wrong!</string>
     <string name="error_view_retry_button">Try again</string>
-    <string name="post_card_thumbnail_content_description">Post Thumbnail</string>
-    <string name="post_card_username">u/{}</string>
+    <string name="post_thumbnail_content_description">Post Thumbnail</string>
+    <string name="post_author">u/</string>
 </resources>

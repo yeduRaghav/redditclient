@@ -53,7 +53,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/margin_8"
-            android:contentDescription="@string/post_card_thumbnail_content_description"
+            android:contentDescription="@string/post_thumbnail_content_description"
             android:scaleType="centerCrop"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -6,14 +6,15 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.yrgv.redditclient.Post
 import com.yrgv.redditclient.R
+import com.yrgv.redditclient.detail.PostDetailScreenActivity
 import com.yrgv.redditclient.main.MainScreenViewModel.PostsDataState
 import com.yrgv.redditclient.main.MainScreenViewModel.PostsDataState.*
 import com.yrgv.redditclient.main.recyclerview.PostsRecyclerViewAdapter
 import com.yrgv.redditclient.utils.extensions.hide
 import com.yrgv.redditclient.utils.extensions.show
 import com.yrgv.redditclient.utils.extensions.start
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.content_main.*
+import kotlinx.android.synthetic.main.activity_main_screen.*
+import kotlinx.android.synthetic.main.content_main_screen.*
 
 class MainScreenActivity : AppCompatActivity() {
 
@@ -34,12 +35,12 @@ class MainScreenActivity : AppCompatActivity() {
     }
 
     private fun setupViews() {
-        setContentView(R.layout.activity_main)
-        setSupportActionBar(main_toolbar)
-        main_error_view.setRetryButtonClickListener {
+        setContentView(R.layout.activity_main_screen)
+        setSupportActionBar(main_screen_toolbar)
+        main_screen_error_view.setRetryButtonClickListener {
             viewModel.retry()
         }
-        main_recycler_view.adapter = recyclerViewAdapter
+        main_screen_recycler_view.adapter = recyclerViewAdapter
     }
 
     private fun setupViewModel() {
@@ -66,25 +67,25 @@ class MainScreenActivity : AppCompatActivity() {
     }
 
     private fun showLoadingView() {
-        main_recycler_view.hide()
-        main_error_view.hide()
-        main_loading_view.start()
+        main_screen_recycler_view.hide()
+        main_screen_error_view.hide()
+        main_screen_loading_view.start()
     }
 
     private fun showRecyclerView() {
-        main_loading_view.hide()
-        main_error_view.hide()
-        main_recycler_view.show()
+        main_screen_loading_view.hide()
+        main_screen_error_view.hide()
+        main_screen_recycler_view.show()
     }
 
     private fun showErrorView() {
-        main_recycler_view.hide()
-        main_loading_view.hide()
-        main_error_view.show()
+        main_screen_recycler_view.hide()
+        main_screen_loading_view.hide()
+        main_screen_error_view.show()
     }
 
     private fun launchPostDetailScreen(post: Post) {
-        //todo: fix me when Detail activity is built
+        startActivity(PostDetailScreenActivity.getIntent(post, this))
     }
 
 }

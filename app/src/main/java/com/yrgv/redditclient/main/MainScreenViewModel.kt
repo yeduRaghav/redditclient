@@ -8,6 +8,8 @@ import com.yrgv.redditclient.Post
 import com.yrgv.redditclient.main.MainScreenViewModel.PostsDataState.*
 import com.yrgv.redditclient.network.PostsResponse
 import com.yrgv.redditclient.network.RedditApi
+import com.yrgv.redditclient.utils.DefaultResourceProvider
+import com.yrgv.redditclient.utils.ResourceProvider
 import com.yrgv.redditclient.utils.extensions.toLocalModel
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -20,6 +22,8 @@ class MainScreenViewModel(application: Application) : AndroidViewModel(applicati
 
     private val posts = MutableLiveData<List<Post>>()
     private val postsDataState = MutableLiveData<PostsDataState>()
+
+    private val resourceProvider: ResourceProvider = DefaultResourceProvider.newInstance(application)
 
     private val api = RedditApi.newInstance()
 
@@ -56,7 +60,7 @@ class MainScreenViewModel(application: Application) : AndroidViewModel(applicati
             .subscribeOn(Schedulers.io())
             .flatMap { postsFromApi ->
                 Single.just(postsFromApi.map { post ->
-                    post.data.toLocalModel()
+                    post.data.toLocalModel(resourceProvider)
                 })
             }
             .observeOn(AndroidSchedulers.mainThread())

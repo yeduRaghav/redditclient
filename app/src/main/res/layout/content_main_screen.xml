@@ -7,7 +7,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/main_recycler_view"
+        android:id="@+id/main_screen_recycler_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:visibility="gone"
@@ -20,7 +20,7 @@
 
 
     <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/main_loading_view"
+        android:id="@+id/main_screen_loading_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -35,7 +35,7 @@
         tools:visibility="visible" />
 
     <com.yrgv.redditclient.utils.views.ErrorView
-        android:id="@+id/main_error_view"
+        android:id="@+id/main_screen_error_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:visibility="gone"
