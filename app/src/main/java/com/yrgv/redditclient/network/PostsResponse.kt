@@ -17,10 +17,13 @@ data class PostsResponse(
         @SerializedName("data") val data: PostData
     ) {
         data class PostData(
+            @SerializedName("id") val id: String,
+            @SerializedName("author") val author: String,
             @SerializedName("title") val title: String,
-            @SerializedName("thumbnail") val thumbnail: String,
             @SerializedName("selftext") val selftext: String,
-            @SerializedName("author") val author: String
+            @SerializedName("thumbnail") val thumbnail: String,
+            @SerializedName("thumbnail_width") val thumbnail_width: Int,
+            @SerializedName("thumbnail_height") val thumbnail_height: Int
         )
     }
 }

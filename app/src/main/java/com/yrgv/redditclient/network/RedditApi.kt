@@ -19,9 +19,7 @@ interface RedditApi {
     companion object {
         private const val BASE_URL = "https://www.reddit.com/r/"
         private const val RESPONSE_TYPE_JSON = ".json"
-        private const val SUB_REDDIT_KOTLIN = "Amd" //todo: change later to 'Kotlin'
-
-
+        private const val SUB_REDDIT_KOTLIN = "PS4" //todo: change later to 'Kotlin'
 
         /**
          * A companion function that creates a retrofit instance for the Api

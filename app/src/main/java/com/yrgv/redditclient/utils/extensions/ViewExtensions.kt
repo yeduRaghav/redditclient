@@ -4,7 +4,7 @@ import android.view.View
 import com.airbnb.lottie.LottieAnimationView
 
 /**
- * File hosts extension functions for the View classes for convenience
+ * Extension functions for the View classes for convenience
  */
 
 fun View.hide() {

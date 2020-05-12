@@ -37,7 +37,6 @@ ext {
 
     picassoVersion ="2.71828"
     lottieVersion="3.4.0"
-    circleImageViewVersion = "3.1.0"
 
     retrofitVersion = "2.3.0"
     okhttpLoggingInterceptorVersion = "4.6.0"

@@ -32,6 +32,13 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    sourceSets {
+        main {
+            assets {
+                srcDirs 'src/main/assets', 'src/main/assets/'
+            }
+        }
+    }
     kotlinOptions {
         jvmTarget = "1.8"
     }
@@ -53,7 +60,6 @@ dependencies {
 
     //Image & Anim
     implementation "com.squareup.picasso:picasso:$rootProject.ext.picassoVersion"
-    implementation "de.hdodenhof:circleimageview:$rootProject.ext.circleImageViewVersion"
     implementation "com.airbnb.android:lottie:$rootProject.ext.lottieVersion"
 
     //api
