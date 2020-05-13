@@ -2,6 +2,7 @@ package com.yrgv.redditclient.utils.extensions
 
 import android.view.View
 import com.airbnb.lottie.LottieAnimationView
+import com.yrgv.redditclient.utils.SimpleCallback
 
 /**
  * Extension functions for the View classes for convenience
@@ -30,4 +31,20 @@ fun LottieAnimationView.start() {
 fun LottieAnimationView.stop() {
     cancelAnimation()
     hide()
+}
+
+/**
+ * Simple debounce implementation
+ * */
+fun View.setThrottledClickListener(delayInMillis: Long = 500L, runWhenClicked: SimpleCallback) {
+    setOnClickListener {
+        this.isClickable = false
+        this.postDelayed(
+            {
+                this.isClickable = true
+            },
+            delayInMillis
+        )
+        runWhenClicked()
+    }
 }

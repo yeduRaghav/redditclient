@@ -11,6 +11,7 @@ import com.yrgv.redditclient.Post
 import com.yrgv.redditclient.R
 import com.yrgv.redditclient.utils.SimpleCallback
 import com.yrgv.redditclient.utils.extensions.hide
+import com.yrgv.redditclient.utils.extensions.setThrottledClickListener
 import com.yrgv.redditclient.utils.extensions.show
 
 /**
@@ -37,8 +38,8 @@ class PostViewHolder private constructor(itemView: View) : RecyclerView.ViewHold
     private val titleView: MaterialTextView = itemView.findViewById(R.id.post_list_item_title)
     private val thumbnailView: ImageView = itemView.findViewById(R.id.post_list_item_thumbnail)
 
-    fun bind(post: Post, onClicked: SimpleCallback) {
-        itemView.setOnClickListener { onClicked() }
+    fun bind(post: Post, clickCallback: SimpleCallback) {
+        itemView.setThrottledClickListener { clickCallback() }
         authorView.text = post.author
         titleView.text = post.title
         post.thumbnailUrl?.let {

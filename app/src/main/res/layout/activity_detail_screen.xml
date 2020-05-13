@@ -1,89 +1,47 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/detail_screen_content"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context=".detail.PostDetailScreenActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/detail_screen_toolbar"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/detail_screen_app_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
+        android:layout_height="@dimen/app_bar_height"
+        android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-        <TextView
-            android:id="@+id/detail_screen_toolbar_title"
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/detail_screen_toolbar_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_8"
-            android:layout_marginEnd="@dimen/margin_8"
-            android:layout_marginBottom="@dimen/margin_8"
-            android:ellipsize="end"
-            android:maxLines="10"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-            tools:text="@tools:sample/lorem/random" />
-    </androidx.appcompat.widget.Toolbar>
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:collapsedTitleTextAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            app:contentScrim="?attr/colorPrimary"
+            app:expandedTitleTextAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+            app:maxLines="5">
 
-    <ScrollView
-        android:id="@+id/detail_screen_scroll_container"
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/detail_screen_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_marginEnd="@dimen/margin_16"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <include layout="@layout/content_detail_screen" />
+    </androidx.core.widget.NestedScrollView>
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/detail_screen_author"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_16"
-                android:layout_marginTop="@dimen/margin_8"
-                android:layout_marginEnd="@dimen/margin_16"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="@tools:sample/lorem/random" />
-
-            <ImageView
-                android:id="@+id/detail_screen_thumbnail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_8"
-                android:adjustViewBounds="true"
-                android:contentDescription="@string/post_thumbnail_content_description"
-                android:scaleType="fitCenter"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/detail_screen_author"
-                app:layout_constraintVertical_bias="0.0"
-                tools:src="@tools:sample/backgrounds/scenic"
-                tools:visibility="visible" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/detail_screen_description"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_16"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/detail_screen_thumbnail"
-                app:layout_constraintVertical_bias="0"
-                app:layout_goneMarginTop="@dimen/margin_16"
-                tools:visibility="visible" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

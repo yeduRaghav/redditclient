@@ -12,7 +12,7 @@ import com.yrgv.redditclient.R
 import com.yrgv.redditclient.utils.extensions.show
 import io.noties.markwon.Markwon
 import kotlinx.android.synthetic.main.activity_detail_screen.*
-
+import kotlinx.android.synthetic.main.content_detail_screen.*
 
 /**
  * Activity for the Detail screen
@@ -45,12 +45,10 @@ class PostDetailScreenActivity : AppCompatActivity() {
 
     private fun setupViews() {
         setContentView(R.layout.activity_detail_screen)
-        //todo: figure out coordinator scroll behaviour
         setSupportActionBar(detail_screen_toolbar)
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
-            setDisplayShowCustomEnabled(true)
         }
     }
 
@@ -65,7 +63,7 @@ class PostDetailScreenActivity : AppCompatActivity() {
         with(viewModel) {
             setData(post)
             getTitle().observe(this@PostDetailScreenActivity, Observer { title ->
-                detail_screen_toolbar_title.text = title
+                detail_screen_toolbar_layout.title = title
             })
             getAuthor().observe(this@PostDetailScreenActivity, Observer { author ->
                 detail_screen_author.text = author

@@ -7,6 +7,7 @@ import android.widget.Button
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.yrgv.redditclient.R
 import com.yrgv.redditclient.utils.SimpleCallback
+import com.yrgv.redditclient.utils.extensions.setThrottledClickListener
 
 /**
  * A simple view that can be used for error cases, shows a message and a button.
@@ -21,9 +22,9 @@ class ErrorView @JvmOverloads constructor(
 
     private val retryButton = findViewById<Button>(R.id.error_view_retry_button)
 
-    fun setRetryButtonClickListener(listener: SimpleCallback) {
-        retryButton.setOnClickListener {
-            listener()
+    fun setRetryButtonClickListener(callback: SimpleCallback) {
+        retryButton.setThrottledClickListener {
+            callback()
         }
     }
 
