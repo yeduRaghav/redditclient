@@ -1,9 +1,9 @@
 package com.yrgv.redditclient.network
 
 import android.util.Log
-import io.reactivex.Single
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -54,6 +54,6 @@ interface RedditApi {
     @GET("{subReddit}$RESPONSE_TYPE_JSON")
     fun getPosts(
         @Path("subReddit") subReddit: String = SUB_REDDIT_KOTLIN
-    ): Single<PostsResponse>
+    ): Call<PostsResponse>
 
 }

@@ -6,9 +6,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.yrgv.redditclient.Post
 import com.yrgv.redditclient.main.MainScreenViewModel.PostsDataState.*
+import com.yrgv.redditclient.network.ApiError
+import com.yrgv.redditclient.network.GetKotlinPostsEndpoint
 import com.yrgv.redditclient.network.PostsResponse
 import com.yrgv.redditclient.network.RedditApi
 import com.yrgv.redditclient.utils.DefaultResourceProvider
+import com.yrgv.redditclient.utils.Either
 import com.yrgv.redditclient.utils.ResourceProvider
 import com.yrgv.redditclient.utils.extensions.toLocalModel
 import io.reactivex.Single
@@ -20,12 +23,12 @@ import io.reactivex.schedulers.Schedulers
  */
 class MainScreenViewModel(application: Application) : AndroidViewModel(application) {
 
+    private val resourceProvider: ResourceProvider =
+        DefaultResourceProvider.newInstance(application)
+    private val getPostsApiCall = GetKotlinPostsEndpoint(RedditApi.newInstance())
+
     private val posts = MutableLiveData<List<Post>>()
     private val postsDataState = MutableLiveData<PostsDataState>()
-
-    private val resourceProvider: ResourceProvider = DefaultResourceProvider.newInstance(application)
-
-    private val api = RedditApi.newInstance()
 
     init {
         fetchPostsFromApi()
@@ -45,29 +48,33 @@ class MainScreenViewModel(application: Application) : AndroidViewModel(applicati
 
     private fun fetchPostsFromApi() {
         postsDataState.postValue(LOADING)
-        api.getPosts()
+        getPostsApiCall.execute()
             .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { response, _ ->
-                response?.data?.children?.let {
-                    handlePostsResponse(it)
-                } ?: postsDataState.postValue(FAILED)
+            .subscribe { response ->
+                handlePostsResponse(response)
             }
     }
 
-    private fun handlePostsResponse(postFromApi: List<PostsResponse.Post>) {
-        Single.just(postFromApi)
-            .subscribeOn(Schedulers.io())
-            .flatMap { postsFromApi ->
-                Single.just(postsFromApi.map { post ->
-                    post.data.toLocalModel(resourceProvider)
-                })
+    private fun handlePostsResponse(response: Either<ApiError, PostsResponse>) {
+        when (response) {
+            is Either.Error -> {
+                postsDataState.postValue(FAILED)
             }
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { localizedPosts ->
-                postsDataState.postValue(FETCHED)
-                posts.postValue(localizedPosts)
+            is Either.Value -> {
+                Single.just(response.value.data.children)
+                    .subscribeOn(Schedulers.io())
+                    .flatMap { postsFromApi ->
+                        Single.just(postsFromApi.map { post ->
+                            post.data.toLocalModel(resourceProvider)
+                        })
+                    }
+                    .subscribeOn(AndroidSchedulers.mainThread())
+                    .subscribe { localizedPosts ->
+                        postsDataState.postValue(FETCHED)
+                        posts.postValue(localizedPosts)
+                    }
             }
+        }
     }
 
     /**
