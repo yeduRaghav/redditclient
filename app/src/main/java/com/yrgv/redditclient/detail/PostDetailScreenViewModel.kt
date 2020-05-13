@@ -13,14 +13,14 @@ class PostDetailScreenViewModel(application: Application) : AndroidViewModel(app
 
     private val title = MutableLiveData<String>()
     private val author = MutableLiveData<String>()
-    private val thumbnailUrl = MutableLiveData<String>()
+    private val thumbnail = MutableLiveData<String>()
     private val description = MutableLiveData<String>()
 
     fun setData(post: Post) {
         title.postValue(post.title)
         author.postValue(post.author)
         post.thumbnailUrl?.let {
-            thumbnailUrl.postValue(it)
+            thumbnail.postValue(it)
         }
         post.description?.let {
             description.postValue(it)
@@ -35,8 +35,8 @@ class PostDetailScreenViewModel(application: Application) : AndroidViewModel(app
         return author
     }
 
-    fun getThumbnailUrl(): LiveData<String> {
-        return thumbnailUrl
+    fun getThumbnail(): LiveData<String> {
+        return thumbnail
     }
 
     fun getDescription(): LiveData<String> {

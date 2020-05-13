@@ -12,7 +12,7 @@ import com.yrgv.redditclient.R
 import com.yrgv.redditclient.utils.extensions.show
 import io.noties.markwon.Markwon
 import kotlinx.android.synthetic.main.activity_detail_screen.*
-import kotlinx.android.synthetic.main.content_detail_screen.*
+
 
 /**
  * Activity for the Detail screen
@@ -72,20 +72,19 @@ class PostDetailScreenActivity : AppCompatActivity() {
             })
             val markwon = Markwon.builder(this@PostDetailScreenActivity).build()
             getDescription().observe(this@PostDetailScreenActivity, Observer { description ->
+                detail_screen_description.show()
                 markwon.setMarkdown(detail_screen_description, description)
             })
-            getThumbnailUrl().observe(this@PostDetailScreenActivity, Observer { url ->
+            getThumbnail().observe(this@PostDetailScreenActivity, Observer { url ->
                 setupThumbnail(url)
             })
         }
     }
 
-    //todo: fix my sizing& aspect ratio
-    private fun setupThumbnail(url: String) {
+    private fun setupThumbnail(thumbnailUrl: String) {
         detail_screen_thumbnail.show()
         Picasso.get()
-            .load(url)
-            .fit()
+            .load(thumbnailUrl)
             .placeholder(R.drawable.post_thumbnail_placeholder)
             .into(detail_screen_thumbnail)
     }

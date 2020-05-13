@@ -22,7 +22,7 @@ import com.yrgv.redditclient.utils.extensions.show
 class PostViewHolder private constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     companion object {
-        const val LAYOUT_ID = R.layout.layout_post_list_item
+        private const val LAYOUT_ID = R.layout.layout_post_list_item
 
         /**
          * Invoke this get an instance of the ViewHolder
@@ -41,13 +41,10 @@ class PostViewHolder private constructor(itemView: View) : RecyclerView.ViewHold
         itemView.setOnClickListener { onClicked() }
         authorView.text = post.author
         titleView.text = post.title
-
-        //todo: implement dynamic image sizing, maintaining Aspect ratio
-        post.thumbnailUrl?.let { url ->
+        post.thumbnailUrl?.let {
             thumbnailView.show()
             Picasso.get()
-                .load(url)
-                .fit()
+                .load(it)
                 .placeholder(R.drawable.post_thumbnail_placeholder)
                 .into(thumbnailView)
         } ?: thumbnailView.hide()
