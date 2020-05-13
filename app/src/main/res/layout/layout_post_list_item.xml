@@ -39,7 +39,7 @@
             android:layout_marginStart="@dimen/margin_8"
             android:layout_marginEnd="@dimen/margin_8"
             android:ellipsize="end"
-            android:maxLines="10"
+            android:maxLines="7"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
             app:layout_constraintBottom_toTopOf="@+id/post_list_item_thumbnail"
             app:layout_constraintEnd_toEndOf="parent"
