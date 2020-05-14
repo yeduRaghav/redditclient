@@ -7,7 +7,7 @@
 Shows list of posts from https://www.reddit.com/r/Kotlin/
   The list contains title, thumbnail and username.
   
-  A loading animation is seen when the data is being fetched
+  A loading animation is seen when the data is being fetched.
   If loading fails, an error view is shown with a retry button
 
 
