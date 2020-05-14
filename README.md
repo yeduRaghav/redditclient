@@ -23,15 +23,20 @@ If a thumbnail exists the image is shown, similarly if article body exists, it i
 
 ### Testing :
 ---------
+**The app has been tested on the following Simulators :**
+
+*Nexus 1 (480x800),  Nexus 5x (1080x1920) &  PixelXL (1440x2560)*
+
+
 Since r/Kotlin usually might not have thumbnails or rich article body, this might not be the best way to test the features.
 
 However, https://www.reddit.com/r/PS4/ is a great way to test
 
-To load a different subreddit :
+**To load a different subreddit :**
 
 Change RedditApi.SUB_REDDIT_KOTLIN = "Kotlin" TO RedditApi.SUB_REDDIT_KOTLIN = "PS4" or anyother subreddit of your choice.
 
-Note : r/Pics won't help, since the Api response for those posts do not return a url for thumbanail property. 
+*Note : r/Pics won't help, since the Api response for those posts do not return a url for thumbanail property.* 
 
 
 
