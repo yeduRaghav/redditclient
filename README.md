@@ -8,7 +8,7 @@ Shows list of posts from https://www.reddit.com/r/Kotlin/
   The list contains title, thumbnail and username.
   
   A loading animation is seen when the data is being fetched.
-  If loading fails, an error view is shown with a retry button
+  If loading fails, an error view is shown with an appropriate message and a retry button.
 
 
 
@@ -34,7 +34,7 @@ However, https://www.reddit.com/r/PS4/ is a great way to test
 
 **To load a different subreddit :**
 
-Change RedditApi.SUB_REDDIT_KOTLIN = "Kotlin" TO RedditApi.SUB_REDDIT_KOTLIN = "PS4" or anyother subreddit of your choice.
+Change GetKotlinPostsEndpoint.SUB_REDDIT_NAME = "Kotlin" TO GetKotlinPostsEndpoint.SUB_REDDIT_NAME = "PS4" or anyother subreddit of your choice.
 
 *Note : r/Pics won't help, since the Api response for those posts do not return a url for thumbanail property.* 
 
