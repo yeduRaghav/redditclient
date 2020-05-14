@@ -34,7 +34,7 @@ However, https://www.reddit.com/r/PS4/ is a great way to test
 
 **To load a different subreddit :**
 
-Change GetKotlinPostsEndpoint.SUB_REDDIT_NAME = "Kotlin" TO GetKotlinPostsEndpoint.SUB_REDDIT_NAME = "PS4" or anyother subreddit of your choice.
+Change ````GetKotlinPostsEndpoint.SUB_REDDIT_NAME = "Kotlin"```` TO ````GetKotlinPostsEndpoint.SUB_REDDIT_NAME = "PS4"```` or anyother subreddit of your choice.
 
 *Note : r/Pics won't help, since the Api response for those posts do not return a url for thumbanail property.* 
 
