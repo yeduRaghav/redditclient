@@ -33,7 +33,7 @@ Change RedditApi.SUB_REDDIT_KOTLIN = "Kotlin" TO RedditApi.SUB_REDDIT_KOTLIN = "
 
 Note : r/Pics won't help, since the Api response for those posts do not return a url for thumbanail property. 
 
-
+![](Nexus 1.gif)
 
 
 
