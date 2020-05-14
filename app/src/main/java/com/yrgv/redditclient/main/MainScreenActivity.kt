@@ -1,6 +1,7 @@
 package com.yrgv.redditclient.main
 
 import android.os.Bundle
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -56,9 +57,9 @@ class MainScreenActivity : AppCompatActivity() {
 
     private fun handlePostsState(state: PostsDataState) {
         when (state) {
-            FETCHED -> showRecyclerView()
-            FAILED -> showErrorView()
-            LOADING -> showLoadingView()
+            is Fetched -> showRecyclerView()
+            is Loading -> showLoadingView()
+            is FetchFailed -> showErrorView(state.messageResId)
         }
     }
 
@@ -78,10 +79,13 @@ class MainScreenActivity : AppCompatActivity() {
         main_screen_recycler_view.show()
     }
 
-    private fun showErrorView() {
+    private fun showErrorView(@StringRes messageResId: Int) {
         main_screen_recycler_view.hide()
         main_screen_loading_view.hide()
-        main_screen_error_view.show()
+        with(main_screen_error_view) {
+            setMessage(messageResId)
+            show()
+        }
     }
 
     private fun launchPostDetailScreen(post: Post) {

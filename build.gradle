@@ -47,8 +47,6 @@ ext {
 
     jUnitVersion = "4.12"
     jUnitExtVersion = "1.1.1"
-    mockitoVersion = "2.19.0"
-
 }
 
 

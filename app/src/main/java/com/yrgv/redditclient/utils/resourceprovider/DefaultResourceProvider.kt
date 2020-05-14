@@ -10,8 +10,12 @@ class DefaultResourceProvider private constructor(private val context: Context) 
     ResourceProvider {
 
     companion object {
-        fun newInstance(application: Application): ResourceProvider {
-            return DefaultResourceProvider(application)
+        private lateinit var resourceProvider: ResourceProvider
+        fun getInstance(application: Application): ResourceProvider {
+            if (!::resourceProvider.isInitialized) {
+                resourceProvider = DefaultResourceProvider(application)
+            }
+            return resourceProvider
         }
     }
 

@@ -1,10 +1,12 @@
 package com.yrgv.redditclient.main
 
 import android.app.Application
+import androidx.annotation.StringRes
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.yrgv.redditclient.Post
+import com.yrgv.redditclient.R
 import com.yrgv.redditclient.main.MainScreenViewModel.PostsDataState.*
 import com.yrgv.redditclient.network.ApiError
 import com.yrgv.redditclient.network.GetKotlinPostsEndpoint
@@ -15,7 +17,9 @@ import com.yrgv.redditclient.utils.extensions.toLocalModel
 import com.yrgv.redditclient.utils.resourceprovider.DefaultResourceProvider
 import com.yrgv.redditclient.utils.resourceprovider.ResourceProvider
 import io.reactivex.Single
+import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
 /**
@@ -24,8 +28,8 @@ import io.reactivex.schedulers.Schedulers
 class MainScreenViewModel(application: Application) : AndroidViewModel(application) {
 
     private val resourceProvider: ResourceProvider =
-        DefaultResourceProvider.newInstance(application)
-    private val getPostsApiCall = GetKotlinPostsEndpoint(RedditApi.newInstance())
+        DefaultResourceProvider.getInstance(application)
+    private val getPostsApiCall = GetKotlinPostsEndpoint(RedditApi.getInstance())
 
     private val posts = MutableLiveData<List<Post>>()
     private val postsDataState = MutableLiveData<PostsDataState>()
@@ -47,18 +51,24 @@ class MainScreenViewModel(application: Application) : AndroidViewModel(applicati
     }
 
     private fun fetchPostsFromApi() {
-        postsDataState.postValue(LOADING)
-        getPostsApiCall.execute()
-            .subscribeOn(Schedulers.io())
-            .subscribe { response ->
-                handlePostsResponse(response)
+        postsDataState.postValue(Loading)
+        getPostsApiCall.execute(object : SingleObserver<Either<ApiError, PostsResponse>> {
+            override fun onSubscribe(d: Disposable?) {}
+            override fun onError(e: Throwable?) {}
+            override fun onSuccess(value: Either<ApiError, PostsResponse>?) {
+                handlePostsResponse(value)
             }
+        })
     }
 
-    private fun handlePostsResponse(response: Either<ApiError, PostsResponse>) {
+    private fun handlePostsResponse(response: Either<ApiError, PostsResponse>?) {
+        if (response == null) {
+            postsDataState.postValue(FetchFailed(getErrorMessage(ApiError.getLocalizedErrorResponse())))
+            return
+        }
         when (response) {
             is Either.Error -> {
-                postsDataState.postValue(FAILED)
+                postsDataState.postValue(FetchFailed(getErrorMessage(response.error)))
             }
             is Either.Value -> {
                 Single.just(response.value.data.children)
@@ -70,21 +80,32 @@ class MainScreenViewModel(application: Application) : AndroidViewModel(applicati
                     }
                     .subscribeOn(AndroidSchedulers.mainThread())
                     .subscribe { localizedPosts ->
-                        postsDataState.postValue(FETCHED)
+                        postsDataState.postValue(Fetched)
                         posts.postValue(localizedPosts)
                     }
             }
         }
     }
 
+
+    private fun getErrorMessage(apiError: ApiError): Int {
+        return when (apiError) {
+            is ApiError.BadRequest,
+            is ApiError.UnAuthorized,
+            is ApiError.GenericError -> R.string.error_view_default_message
+            is ApiError.NetworkError -> R.string.error_view_network_issue_message
+        }
+    }
+
+
     /**
      * Describes the state of posts data
-     * @property FETCHED Posts fetched successfully
-     * @property FAILED Posts fetch failed
-     * @property LOADING Posts are being fetched
-     * */
-    enum class PostsDataState {
-        FETCHED, FAILED, LOADING
+     **/
+    sealed class PostsDataState {
+        object Fetched : PostsDataState()
+        object Loading : PostsDataState()
+        data class FetchFailed(@StringRes val messageResId: Int) : PostsDataState()
     }
+
 
 }

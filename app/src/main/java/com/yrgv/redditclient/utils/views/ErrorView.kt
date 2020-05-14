@@ -4,7 +4,9 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.Button
+import androidx.annotation.StringRes
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.google.android.material.textview.MaterialTextView
 import com.yrgv.redditclient.R
 import com.yrgv.redditclient.utils.SimpleCallback
 import com.yrgv.redditclient.utils.extensions.setThrottledClickListener
@@ -21,11 +23,19 @@ class ErrorView @JvmOverloads constructor(
     }
 
     private val retryButton = findViewById<Button>(R.id.error_view_retry_button)
+    private val messageView = findViewById<MaterialTextView>(R.id.error_view_message)
 
     fun setRetryButtonClickListener(callback: SimpleCallback) {
         retryButton.setThrottledClickListener {
             callback()
         }
+    }
+
+    /**
+     * Set the error message to be displayed
+     * */
+    fun setMessage(@StringRes messageResId: Int) {
+        messageView.text = context.getString(messageResId)
     }
 
 }

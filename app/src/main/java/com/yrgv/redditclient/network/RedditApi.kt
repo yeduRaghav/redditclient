@@ -19,29 +19,32 @@ interface RedditApi {
     companion object {
         private const val BASE_URL = "https://www.reddit.com/r/"
         private const val RESPONSE_TYPE_JSON = ".json"
-        private const val SUB_REDDIT_KOTLIN = "Kotlin"
-
+        private lateinit var api: RedditApi
         /**
          * A companion function that creates a retrofit instance for the Api
          * */
-        fun newInstance(): RedditApi {
-            val loggingInterceptor = HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
-                override fun log(message: String) {
-                    Log.i("Guruve", message)
-                }
-            }).setLevel(HttpLoggingInterceptor.Level.BODY)
+        fun getInstance(): RedditApi {
+            if (!::api.isInitialized) {
+                val loggingInterceptor =
+                    HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
+                        override fun log(message: String) {
+                            Log.i("Guruve", message)
+                        }
+                    }).setLevel(HttpLoggingInterceptor.Level.BODY)
 
-            val okHttpClient = OkHttpClient.Builder()
-                .addInterceptor(loggingInterceptor)
-                .build()
+                val okHttpClient = OkHttpClient.Builder()
+                    .addInterceptor(loggingInterceptor)
+                    .build()
 
-            return Retrofit.Builder()
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(BASE_URL)
-                .client(okHttpClient)
-                .build()
-                .create(RedditApi::class.java)
+                api = Retrofit.Builder()
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .baseUrl(BASE_URL)
+                    .client(okHttpClient)
+                    .build()
+                    .create(RedditApi::class.java)
+            }
+            return api
         }
     }
 
@@ -49,11 +52,10 @@ interface RedditApi {
     /**
      * Returns a list of posts for a subReddit
      * @param subReddit The subReddit to returns the post from.
-     * By default returns from Kotlin subReddit
      * */
     @GET("{subReddit}$RESPONSE_TYPE_JSON")
     fun getPosts(
-        @Path("subReddit") subReddit: String = SUB_REDDIT_KOTLIN
+        @Path("subReddit") subReddit: String
     ): Call<PostsResponse>
 
 }

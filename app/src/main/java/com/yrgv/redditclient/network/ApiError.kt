@@ -1,6 +1,6 @@
 package com.yrgv.redditclient.network
 
-import retrofit2.Response
+import java.net.UnknownHostException
 
 /**
  * Defines localized error responses and their associated data.
@@ -8,6 +8,7 @@ import retrofit2.Response
 sealed class ApiError {
     object BadRequest : ApiError()
     object UnAuthorized : ApiError()
+    data class NetworkError(val message: String?) : ApiError()
     data class GenericError(val errorBody: String?) : ApiError()
 
 
@@ -19,12 +20,20 @@ sealed class ApiError {
          * Returns an appropriate localized error object.
          * Note that the response codes used here might not be accurate
          * */
-        fun <R> getErrorResponse(response: Response<R>): ApiError {
-            return when (response.code()) {
+        fun getLocalizedErrorResponse(responseCode: Int, errorBody: String?): ApiError {
+            return when (responseCode) {
                 RESPONSE_CODE_BAD_REQUEST -> BadRequest
                 RESPONSE_CODE_UNAUTHORIZED -> UnAuthorized
-                else -> GenericError(response.errorBody()?.string())
+                else -> GenericError(errorBody)
             }
         }
+
+        fun getLocalizedErrorResponse(exception: Throwable? = null): ApiError {
+            return when (exception) {
+                is UnknownHostException -> NetworkError(exception.message)
+                else -> GenericError(exception?.message)
+            }
+        }
+
     }
 }
