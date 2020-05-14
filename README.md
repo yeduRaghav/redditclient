@@ -18,7 +18,7 @@ Click a post from the main screen to load the detail page.
 
 The collapsable toolbar shows the title of the post.
 
-If a thumnail exists the image is shown, similarly if article body exists, it is shown below the image.
+If a thumbnail exists the image is shown, similarly if article body exists, it is shown below the image.
 
 
 ### Testing :
@@ -34,15 +34,18 @@ Change RedditApi.SUB_REDDIT_KOTLIN = "Kotlin" TO RedditApi.SUB_REDDIT_KOTLIN = "
 Note : r/Pics won't help, since the Api response for those posts do not return a url for thumbanail property. 
 
 
+
+
+
 ### In defence of the dependencies :
 -------------------
 
-**Markwon :** Reddit returns the article as mardown and Markow does a great job of rendering Markdown in TextViews.
+**Markwon :** Reddit returns the article as mardown and Markwon does a great job of rendering Markdown in TextViews.
 
-**Material:1.2.0-alpha05 :** Due to the fact that the title of the post needs to be displyed on the Navigation bar, Collapsable Toolbar made sense.
+**Material:1.2.0-alpha05 :** Due to the fact that the title of the post needs to be displayed on the Navigation bar, Collapsable Toolbar made sense.
 However only way to show multiple lines of text in Collapsable Toolbar is to :
  1. Implement lot of custom code from stackoverflow, that I cannot defend.
- 2. Use a custom library just for the collapsable toolabar.
+ 2. Use a custom library just for the collapsable Toolbar.
  3. Update material version to 1.2.0-alpha05, that gives what is necessary with one line <code> app:maxLines="" </code> 
 
 According to google, alpha version is stable, just prone to api changes.
