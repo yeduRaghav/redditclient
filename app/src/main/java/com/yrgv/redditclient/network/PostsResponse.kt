@@ -21,9 +21,7 @@ data class PostsResponse(
             @SerializedName("author") val author: String,
             @SerializedName("title") val title: String,
             @SerializedName("selftext") val selftext: String,
-            @SerializedName("thumbnail") val thumbnail: String,
-            @SerializedName("thumbnail_width") val thumbnail_width: Int,
-            @SerializedName("thumbnail_height") val thumbnail_height: Int
+            @SerializedName("thumbnail") val thumbnail: String
         )
     }
 }

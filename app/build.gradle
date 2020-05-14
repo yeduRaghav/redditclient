@@ -74,14 +74,7 @@ dependencies {
     //rx
     implementation "io.reactivex.rxjava2:rxandroid:$rootProject.ext.rxAndroidVersion"
 
-    //di
-    implementation "com.google.dagger:dagger-android:$rootProject.ext.daggerVersion"
-    implementation "com.google.dagger:dagger-android-support:$rootProject.ext.daggerVersion"
-    kapt "com.google.dagger:dagger-android-processor:$rootProject.ext.daggerVersion"
-    kapt "com.google.dagger:dagger-compiler:$rootProject.ext.daggerVersion"
-
-
     testImplementation "junit:junit:$rootProject.ext.jUnitVersion"
     androidTestImplementation "androidx.test.ext:junit:$rootProject.ext.jUnitExtVersion"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.ext.expressoVersion"
+    testImplementation "org.mockito:mockito-core:$rootProject.ext.mockitoVersion"
 }

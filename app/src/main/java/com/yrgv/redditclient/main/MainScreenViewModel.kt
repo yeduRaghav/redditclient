@@ -10,10 +10,10 @@ import com.yrgv.redditclient.network.ApiError
 import com.yrgv.redditclient.network.GetKotlinPostsEndpoint
 import com.yrgv.redditclient.network.PostsResponse
 import com.yrgv.redditclient.network.RedditApi
-import com.yrgv.redditclient.utils.DefaultResourceProvider
 import com.yrgv.redditclient.utils.Either
-import com.yrgv.redditclient.utils.ResourceProvider
 import com.yrgv.redditclient.utils.extensions.toLocalModel
+import com.yrgv.redditclient.utils.resourceprovider.DefaultResourceProvider
+import com.yrgv.redditclient.utils.resourceprovider.ResourceProvider
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -65,7 +65,7 @@ class MainScreenViewModel(application: Application) : AndroidViewModel(applicati
                     .subscribeOn(Schedulers.io())
                     .flatMap { postsFromApi ->
                         Single.just(postsFromApi.map { post ->
-                            post.data.toLocalModel(resourceProvider)
+                            post.data.toLocalModel { resId -> resourceProvider.getString(resId) }
                         })
                     }
                     .subscribeOn(AndroidSchedulers.mainThread())

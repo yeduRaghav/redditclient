@@ -1,12 +1,13 @@
-package com.yrgv.redditclient.utils
+package com.yrgv.redditclient.utils.resourceprovider
 
 import android.app.Application
 import android.content.Context
 
 /**
- * Implementation of Resource Provider
+ * Implementation for Resource Provider
  */
-class DefaultResourceProvider private constructor(private val context: Context) : ResourceProvider {
+class DefaultResourceProvider private constructor(private val context: Context) :
+    ResourceProvider {
 
     companion object {
         fun newInstance(application: Application): ResourceProvider {

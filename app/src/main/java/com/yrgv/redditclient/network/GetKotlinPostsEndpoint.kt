@@ -3,7 +3,6 @@ package com.yrgv.redditclient.network
 import com.yrgv.redditclient.utils.Either
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
-import retrofit2.Response
 
 /**
  * Simple abstraction for Endpoint.
@@ -22,21 +21,8 @@ class GetKotlinPostsEndpoint constructor(api: RedditApi) {
             .flatMap { apiResponse ->
                 return@flatMap apiResponse.body()?.let {
                     Single.just(Either.value(it))
-                } ?: Single.just(Either.error(getErrorResponse(apiResponse)))
+                } ?: Single.just(Either.error(ApiError.getErrorResponse(apiResponse)))
             }
-    }
-
-
-    /**
-     * Returns an appropriate localized error object.
-     * Note that the response codes used here might not be accurate
-     * */
-    private fun getErrorResponse(response: Response<PostsResponse>): ApiError {
-        return when (response.code()) {
-            400 -> ApiError.BadRequest
-            401 -> ApiError.UnAuthorized
-            else -> ApiError.GenericError(response.errorBody()?.string())
-        }
     }
 
 }

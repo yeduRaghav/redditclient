@@ -1,4 +1,4 @@
-package com.yrgv.redditclient.utils
+package com.yrgv.redditclient.utils.resourceprovider
 
 import androidx.annotation.StringRes
 
