@@ -13,11 +13,11 @@ import io.reactivex.schedulers.Schedulers
 class GetKotlinPostsEndpoint constructor(private val api: RedditApi) {
 
     private companion object {
-        const val SUB_REDDIT_KOTLIN = "Kotlin"
+        const val SUB_REDDIT_NAME = "Kotlin"
     }
 
     fun execute(observer: SingleObserver<Either<ApiError, PostsResponse>>) {
-        Single.just(api.getPosts(SUB_REDDIT_KOTLIN))
+        Single.just(api.getPosts(SUB_REDDIT_NAME))
             .subscribeOn(Schedulers.io())
             .flatMap {
                 Single.just(it.execute())
